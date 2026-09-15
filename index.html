@@ -1,0 +1,3210 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de 50 Exercícios - JavaScript</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #222;
+        }
+
+        header {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+        }
+
+        header p {
+            margin: 0;
+            color: #ddd;
+        }
+
+        main {
+            width: 95%;
+            max-width: 1000px;
+            margin: 25px auto;
+        }
+
+        .menu {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .menu a {
+            display: inline-block;
+            text-decoration: none;
+            color: #222;
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 4px;
+        }
+
+        .bloco {
+            margin-top: 30px;
+            background: #222;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+        }
+
+        .questao {
+            background: white;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,.08);
+        }
+
+        .questao h2 {
+            margin-top: 0;
+        }
+
+        .descricao {
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .campos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        button {
+            background: #222;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        .resultado {
+            margin-top: 12px;
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            min-height: 40px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 24px;
+            }
+
+            main {
+                width: 96%;
+            }
+
+            .questao {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Lista de Exercícios Práticos - JavaScript</h1>
+    <p>50 questões em uma única página</p>
+</header>
+
+<main>
+
+    <div class="menu">
+        <a href="#bloco1">Questões 1–17</a>
+        <a href="#bloco2">Questões 18–34</a>
+        <a href="#bloco3">Questões 35–50</a>
+    </div>
+
+    <div id="bloco1" class="bloco">
+        <h2>Bloco I - Condicionais</h2>
+    </div>
+
+    <div id="questoes"></div>
+
+</main>
+
+<script>
+
+const questoes = [
+    {
+        id: 1,
+        titulo: "Classificação de consumo de energia elétrica",
+        descricao: "Informe o consumo mensal em kWh.",
+        campos: [
+            ["q1a", "number", "Consumo em kWh"]
+        ]
+    },
+    {
+        id: 2,
+        titulo: "Elegibilidade para bolsa acadêmica",
+        descricao: "Informe média, frequência e renda familiar per capita.",
+        campos: [
+            ["q2a", "number", "Média (0-10)"],
+            ["q2b", "number", "Frequência (%)"],
+            ["q2c", "number", "Renda per capita"]
+        ]
+    },
+    {
+        id: 3,
+        titulo: "Triagem de prioridade em atendimento",
+        descricao: "Informe idade e se possui condição de prioridade.",
+        campos: [
+            ["q3a", "number", "Idade"],
+            ["q3b", "select", "Possui prioridade?", ["sim", "nao"]]
+        ]
+    },
+    {
+        id: 4,
+        titulo: "Autorização de acesso a laboratório",
+        descricao: "Informe matrícula, treinamento e horário.",
+        campos: [
+            ["q4a", "select", "Matrícula ativa?", ["sim", "nao"]],
+            ["q4b", "select", "Treinamento concluído?", ["sim", "nao"]],
+            ["q4c", "number", "Hora (0-23)"]
+        ]
+    },
+    {
+        id: 5,
+        titulo: "Cálculo de tarifa de estacionamento",
+        descricao: "Informe a quantidade de horas de permanência.",
+        campos: [
+            ["q5a", "number", "Horas"]
+        ]
+    },
+    {
+        id: 6,
+        titulo: "Desconto progressivo em loja",
+        descricao: "Informe valor da compra e fidelidade.",
+        campos: [
+            ["q6a", "number", "Valor da compra"],
+            ["q6b", "select", "Cliente fidelidade?", ["sim", "nao"]]
+        ]
+    },
+    {
+        id: 7,
+        titulo: "Validação de nota e situação acadêmica",
+        descricao: "Informe nota e frequência.",
+        campos: [
+            ["q7a", "number", "Nota (0-10)"],
+            ["q7b", "number", "Frequência (%)"]
+        ]
+    },
+    {
+        id: 8,
+        titulo: "Escolha de plano de internet",
+        descricao: "Informe consumo e número de dispositivos.",
+        campos: [
+            ["q8a", "number", "Consumo em GB"],
+            ["q8b", "number", "Dispositivos"]
+        ]
+    },
+    {
+        id: 9,
+        titulo: "Alerta de estoque",
+        descricao: "Informe estoque atual e estoque mínimo.",
+        campos: [
+            ["q9a", "number", "Estoque atual"],
+            ["q9b", "number", "Estoque mínimo"]
+        ]
+    },
+    {
+        id: 10,
+        titulo: "Conversor de temperatura com validação",
+        descricao: "Informe a temperatura em Celsius.",
+        campos: [
+            ["q10a", "number", "Temperatura °C"]
+        ]
+    },
+    {
+        id: 11,
+        titulo: "Sistema de aprovação de crédito didático",
+        descricao: "Informe renda, comprometimento e histórico.",
+        campos: [
+            ["q11a", "number", "Renda mensal"],
+            ["q11b", "number", "Comprometimento (%)"],
+            ["q11c", "select", "Histórico", ["bom", "regular", "ruim"]]
+        ]
+    },
+    {
+        id: 12,
+        titulo: "Controle de velocidade em via simulada",
+        descricao: "Informe velocidade registrada e limite.",
+        campos: [
+            ["q12a", "number", "Velocidade"],
+            ["q12b", "number", "Limite"]
+        ]
+    },
+    {
+        id: 13,
+        titulo: "Avaliação de desempenho de servidor",
+        descricao: "Informe uso de CPU e memória.",
+        campos: [
+            ["q13a", "number", "CPU (%)"],
+            ["q13b", "number", "Memória (%)"]
+        ]
+    },
+    {
+        id: 14,
+        titulo: "Validação de triângulo",
+        descricao: "Informe os três lados.",
+        campos: [
+            ["q14a", "number", "Lado A"],
+            ["q14b", "number", "Lado B"],
+            ["q14c", "number", "Lado C"]
+        ]
+    },
+    {
+        id: 15,
+        titulo: "Cálculo de imposto em faixas simuladas",
+        descricao: "Informe a renda.",
+        campos: [
+            ["q15a", "number", "Renda"]
+        ]
+    },
+    {
+        id: 16,
+        titulo: "Classificação de índice de qualidade",
+        descricao: "Informe índice de 0 a 100.",
+        campos: [
+            ["q16a", "number", "Índice"]
+        ]
+    },
+    {
+        id: 17,
+        titulo: "Regras de frete de comércio eletrônico",
+        descricao: "Informe compra, região, benefício e frete base.",
+        campos: [
+            ["q17a", "number", "Valor da compra"],
+            ["q17b", "select", "Região", ["Sul", "Sudeste", "Nordeste", "Norte", "Centro-Oeste"]],
+            ["q17c", "select", "Benefício?", ["sim", "nao"]],
+            ["q17d", "number", "Frete base"]
+        ]
+    }
+];
+
+const questoes2 = [
+    {
+        id: 18,
+        titulo: "Monitoramento semanal de consumo",
+        descricao: "Digite 7 consumos separados por vírgula.",
+        campos: [
+            ["q18a", "text", "7 valores separados por vírgula"]
+        ]
+    },
+    {
+        id: 19,
+        titulo: "Tabuada personalizada",
+        descricao: "Informe número e limite.",
+        campos: [
+            ["q19a", "number", "Número"],
+            ["q19b", "number", "Limite"]
+        ]
+    },
+    {
+        id: 20,
+        titulo: "Contagem regressiva de lançamento",
+        descricao: "Informe um número inteiro positivo.",
+        campos: [
+            ["q20a", "number", "Número inicial"]
+        ]
+    },
+    {
+        id: 21,
+        titulo: "Soma de valores até condição de parada",
+        descricao: "Digite valores separados por vírgula. -1 encerra.",
+        campos: [
+            ["q21a", "text", "Valores separados por vírgula"]
+        ]
+    },
+    {
+        id: 22,
+        titulo: "Tentativas de autenticação",
+        descricao: "Senha correta: 1234. Máximo de 3 tentativas.",
+        campos: [
+            ["q22a", "text", "Tentativas separadas por vírgula"]
+        ]
+    },
+    {
+        id: 23,
+        titulo: "Sequência de números pares e ímpares",
+        descricao: "Informe início e fim.",
+        campos: [
+            ["q23a", "number", "Início"],
+            ["q23b", "number", "Fim"]
+        ]
+    },
+    {
+        id: 24,
+        titulo: "Fatorial com validação",
+        descricao: "Informe um inteiro não negativo.",
+        campos: [
+            ["q24a", "number", "Número"]
+        ]
+    },
+    {
+        id: 25,
+        titulo: "Levantamento de notas de uma turma",
+        descricao: "Digite as notas separadas por vírgula.",
+        campos: [
+            ["q25a", "text", "Notas separadas por vírgula"]
+        ]
+    },
+    {
+        id: 26,
+        titulo: "Simulação de crescimento de investimento",
+        descricao: "Informe valor inicial, taxa e valor-alvo.",
+        campos: [
+            ["q26a", "number", "Valor inicial"],
+            ["q26b", "number", "Taxa (%)"],
+            ["q26c", "number", "Valor-alvo"]
+        ]
+    },
+    {
+        id: 27,
+        titulo: "Geração de sequência de Fibonacci",
+        descricao: "Informe a quantidade de termos.",
+        campos: [
+            ["q27a", "number", "Quantidade"]
+        ]
+    },
+    {
+        id: 28,
+        titulo: "Verificação de número primo",
+        descricao: "Informe um número inteiro.",
+        campos: [
+            ["q28a", "number", "Número"]
+        ]
+    },
+    {
+        id: 29,
+        titulo: "Pesquisa de satisfação",
+        descricao: "Notas de 1 a 5. Use 0 para encerrar.",
+        campos: [
+            ["q29a", "text", "Notas separadas por vírgula"]
+        ]
+    },
+    {
+        id: 30,
+        titulo: "Controle de caixa diário",
+        descricao: "Use E:valor para entrada, S:valor para saída e F para finalizar.",
+        campos: [
+            ["q30a", "text", "Ex.: E:100,S:30,E:50,F"]
+        ]
+    },
+    {
+        id: 31,
+        titulo: "Jogo de adivinhação",
+        descricao: "Número secreto: 37. Máximo de 5 tentativas.",
+        campos: [
+            ["q31a", "text", "Palpites separados por vírgula"]
+        ]
+    },
+    {
+        id: 32,
+        titulo: "Múltiplos em intervalo",
+        descricao: "Informe intervalo e dois divisores.",
+        campos: [
+            ["q32a", "number", "Início"],
+            ["q32b", "number", "Fim"],
+            ["q32c", "number", "Divisor A"],
+            ["q32d", "number", "Divisor B"]
+        ]
+    },
+    {
+        id: 33,
+        titulo: "Padrão textual com laços aninhados",
+        descricao: "Informe tamanho e caractere.",
+        campos: [
+            ["q33a", "number", "Tamanho"],
+            ["q33b", "text", "Caractere"]
+        ]
+    },
+    {
+        id: 34,
+        titulo: "Processamento de leituras de sensor",
+        descricao: "Informe 20 leituras separadas por vírgula.",
+        campos: [
+            ["q34a", "text", "20 valores"]
+        ]
+    }
+];
+
+const questoes3 = [
+    {
+        id: 35,
+        titulo: "Cadastro e análise de notas em vetor",
+        descricao: "Digite notas separadas por vírgula.",
+        campos: [
+            ["q35a", "text", "Notas"]
+        ]
+    },
+    {
+        id: 36,
+        titulo: "Controle de consumo mensal",
+        descricao: "Digite os 12 consumos mensais.",
+        campos: [
+            ["q36a", "text", "12 valores"]
+        ]
+    },
+    {
+        id: 37,
+        titulo: "Busca de produto por código",
+        descricao: "Vetor fixo: 101, 205, 310, 450, 512, 620.",
+        campos: [
+            ["q37a", "number", "Código"]
+        ]
+    },
+    {
+        id: 38,
+        titulo: "Contagem de ocorrências em vetor",
+        descricao: "Informe o vetor e o valor de referência.",
+        campos: [
+            ["q38a", "text", "Vetor"],
+            ["q38b", "number", "Valor"]
+        ]
+    },
+    {
+        id: 39,
+        titulo: "Separação de valores pares e ímpares",
+        descricao: "Digite números separados por vírgula.",
+        campos: [
+            ["q39a", "text", "Números"]
+        ]
+    },
+    {
+        id: 40,
+        titulo: "Remoção lógica de duplicados",
+        descricao: "Digite os valores separados por vírgula.",
+        campos: [
+            ["q40a", "text", "Valores"]
+        ]
+    },
+    {
+        id: 41,
+        titulo: "Inversão manual de vetor",
+        descricao: "Digite os valores separados por vírgula.",
+        campos: [
+            ["q41a", "text", "Valores"]
+        ]
+    },
+    {
+        id: 42,
+        titulo: "Ordenação simples sem método pronto",
+        descricao: "Digite números separados por vírgula.",
+        campos: [
+            ["q42a", "text", "Números"]
+        ]
+    },
+    {
+        id: 43,
+        titulo: "Ranking de desempenho",
+        descricao: "Digite pontuações separadas por vírgula.",
+        campos: [
+            ["q43a", "text", "Pontuações"]
+        ]
+    },
+    {
+        id: 44,
+        titulo: "Análise de temperaturas semanais",
+        descricao: "Digite 14 temperaturas.",
+        campos: [
+            ["q44a", "text", "14 temperaturas"]
+        ]
+    },
+    {
+        id: 45,
+        titulo: "Carrinho de compras em arrays paralelos",
+        descricao: "Digite produtos, preços e o produto para pesquisar.",
+        campos: [
+            ["q45a", "text", "Produtos"],
+            ["q45b", "text", "Preços"],
+            ["q45c", "text", "Produto para pesquisar"]
+        ]
+    },
+    {
+        id: 46,
+        titulo: "Fila de atendimento simplificada",
+        descricao: "E:nome entra, A atende, V mostra a fila e F finaliza.",
+        campos: [
+            ["q46a", "text", "Ex.: E:Ana,E:Joao,V,A,V,F"]
+        ]
+    },
+    {
+        id: 47,
+        titulo: "Pesquisa de dados acima de um limite",
+        descricao: "Informe vetor e limite.",
+        campos: [
+            ["q47a", "text", "Medições"],
+            ["q47b", "number", "Limite"]
+        ]
+    },
+    {
+        id: 48,
+        titulo: "Comparação entre dois vetores",
+        descricao: "Informe dois vetores de mesmo tamanho.",
+        campos: [
+            ["q48a", "text", "Vetor A"],
+            ["q48b", "text", "Vetor B"]
+        ]
+    },
+    {
+        id: 49,
+        titulo: "Matriz simplificada representada por vetores",
+        descricao: "Informe 15 consumos: 3 setores × 5 dias.",
+        campos: [
+            ["q49a", "text", "15 valores"]
+        ]
+    },
+    {
+        id: 50,
+        titulo: "Desafio integrador: painel de eficiência energética",
+        descricao: "Informe pelo menos 10 consumos.",
+        campos: [
+            ["q50a", "text", "10 ou mais valores"]
+        ]
+    }
+];
+
+function criarQuestao(q) {
+
+    let html = `
+        <section class="questao">
+            <h2>Questão ${q.id} - ${q.titulo}</h2>
+            <p class="descricao">${q.descricao}</p>
+            <div class="campos">
+    `;
+
+    q.campos.forEach(campo => {
+
+        let id = campo[0];
+        let tipo = campo[1];
+        let placeholder = campo[2];
+
+        if (tipo === "select") {
+
+            html += `
+                <select id="${id}">
+                    <option value="">${placeholder}</option>
+            `;
+
+            campo[3].forEach(opcao => {
+
+                html += `
+                    <option value="${opcao}">${opcao}</option>
+                `;
+
+            });
+
+            html += `</select>`;
+
+        } else {
+
+            html += `
+                <input
+                    id="${id}"
+                    type="${tipo}"
+                    placeholder="${placeholder}"
+                >
+            `;
+        }
+
+    });
+
+    html += `
+            </div>
+
+            <button onclick="executar(${q.id})">
+                Executar questão ${q.id}
+            </button>
+
+            <div class="resultado" id="resultado${q.id}">
+                Resultado aparecerá aqui.
+            </div>
+        </section>
+    `;
+
+    return html;
+}
+
+document.getElementById("questoes").innerHTML = `
+    ${questoes.map(criarQuestao).join("")}
+
+    <div class="bloco">
+        <h2>Bloco II - Estruturas de repetição</h2>
+    </div>
+
+    ${questoes2.map(criarQuestao).join("")}
+
+    <div class="bloco">
+        <h2>Bloco III - Vetores (Arrays) e integração</h2>
+    </div>
+
+    ${questoes3.map(criarQuestao).join("")}
+`;
+
+function valor(id) {
+    return document.getElementById(id).value;
+}
+
+function numero(id) {
+    return Number(valor(id));
+}
+
+function listaNumeros(id) {
+    return valor(id)
+        .split(",")
+        .map(x => Number(x.trim()))
+        .filter(x => !Number.isNaN(x));
+}
+
+function listaTexto(id) {
+    return valor(id)
+        .split(",")
+        .map(x => x.trim());
+}
+
+function resultado(id, texto) {
+    document.getElementById("resultado" + id).textContent = texto;
+}
+
+function dinheiro(v) {
+    return v.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
+
+function executar(id) {
+
+    switch(id) {
+
+        case 1: {
+
+            let consumo = numero("q1a");
+
+            if (!Number.isFinite(consumo) || consumo < 0) {
+                resultado(1, "Consumo inválido.");
+                return;
+            }
+
+            let faixa;
+
+            if (consumo <= 100)
+                faixa = "Baixo";
+            else if (consumo <= 250)
+                faixa = "Moderado";
+            else if (consumo <= 500)
+                faixa = "Alto";
+            else
+                faixa = "Muito alto";
+
+            let mensagem =
+                faixa === "Baixo"
+                    ? "Consumo controlado."
+                    : faixa === "Moderado"
+                    ? "Consumo moderado. Avalie formas de economia."
+                    : faixa === "Alto"
+                    ? "Consumo alto. Procure reduzir desperdícios."
+                    : "Consumo muito alto. Recomenda-se uma análise detalhada.";
+
+            resultado(
+                1,
+                `Classificação: ${faixa}\n${mensagem}`
+            );
+
+            break;
+        }
+
+        case 2: {
+
+            let media = numero("q2a");
+            let frequencia = numero("q2b");
+            let renda = numero("q2c");
+
+            if (
+                media < 0 ||
+                media > 10 ||
+                frequencia < 0 ||
+                frequencia > 100 ||
+                renda < 0
+            ) {
+                resultado(2, "Dados inválidos.");
+                return;
+            }
+
+            let okMedia = media >= 7;
+            let okFrequencia = frequencia >= 75;
+            let okRenda = renda <= 1500;
+
+            let problemas = [];
+
+            if (!okMedia)
+                problemas.push("média");
+
+            if (!okFrequencia)
+                problemas.push("frequência");
+
+            if (!okRenda)
+                problemas.push("renda");
+
+            if (problemas.length === 0) {
+
+                resultado(
+                    2,
+                    "Resultado: ELEGÍVEL.\nTodos os critérios foram atendidos."
+                );
+
+            } else if (problemas.length === 1) {
+
+                resultado(
+                    2,
+                    "Resultado: ANÁLISE COMPLEMENTAR.\nCritério não atendido: " +
+                    problemas[0]
+                );
+
+            } else {
+
+                resultado(
+                    2,
+                    "Resultado: NÃO ELEGÍVEL.\nCritérios não atendidos: " +
+                    problemas.join(", ")
+                );
+            }
+
+            break;
+        }
+
+        case 3: {
+
+            let idade = numero("q3a");
+            let prioridade = valor("q3b");
+
+            if (
+                idade < 0 ||
+                idade > 120 ||
+                !prioridade
+            ) {
+                resultado(3, "Dados inválidos.");
+                return;
+            }
+
+            let classificacao;
+
+            if (
+                prioridade === "sim" &&
+                idade >= 60
+            ) {
+
+                classificacao = "Alta prioridade";
+
+            } else if (
+                prioridade === "sim" ||
+                idade >= 60
+            ) {
+
+                classificacao = "Média prioridade";
+
+            } else {
+
+                classificacao = "Baixa prioridade";
+            }
+
+            resultado(3, classificacao);
+
+            break;
+        }
+
+        case 4: {
+
+            let matricula = valor("q4a");
+            let treinamento = valor("q4b");
+            let hora = numero("q4c");
+
+            if (
+                !matricula ||
+                !treinamento ||
+                hora < 0 ||
+                hora > 23
+            ) {
+                resultado(4, "Dados inválidos.");
+                return;
+            }
+
+            if (
+                matricula === "sim" &&
+                treinamento === "sim" &&
+                hora >= 8 &&
+                hora < 18
+            ) {
+
+                resultado(4, "ACESSO AUTORIZADO.");
+
+            } else if (
+                matricula === "sim" &&
+                treinamento === "sim"
+            ) {
+
+                resultado(4, "ACESSO RECUSADO POR HORÁRIO.");
+
+            } else {
+
+                resultado(4, "ACESSO RECUSADO POR PENDÊNCIA CADASTRAL.");
+            }
+
+            break;
+        }
+
+        case 5: {
+
+            let horas = numero("q5a");
+
+            if (horas < 0 || !Number.isFinite(horas)) {
+                resultado(5, "Tempo inválido.");
+                return;
+            }
+
+            let categoria;
+            let valorPago;
+
+            if (horas <= 0.5) {
+                categoria = "Tolerância";
+                valorPago = 0;
+            } else if (horas <= 2) {
+                categoria = "Curta permanência";
+                valorPago = 10;
+            } else if (horas <= 5) {
+                categoria = "Permanência média";
+                valorPago = 20;
+            } else {
+                categoria = "Longa permanência";
+                valorPago = 35;
+            }
+
+            resultado(
+                5,
+                `Categoria: ${categoria}\nValor: ${dinheiro(valorPago)}`
+            );
+
+            break;
+        }
+
+        case 6: {
+
+            let compra = numero("q6a");
+            let fidelidade = valor("q6b");
+
+            if (
+                compra < 0 ||
+                !fidelidade
+            ) {
+                resultado(6, "Dados inválidos.");
+                return;
+            }
+
+            let desconto;
+
+            if (compra <= 100)
+                desconto = 0.05;
+            else if (compra <= 500)
+                desconto = 0.10;
+            else
+                desconto = 0.15;
+
+            if (fidelidade === "sim")
+                desconto += 0.05;
+
+            let valorDesconto = compra * desconto;
+            let valorFinal = Math.max(
+                0,
+                compra - valorDesconto
+            );
+
+            resultado(
+                6,
+                `Desconto: ${(desconto * 100).toFixed(0)}%\n` +
+                `Valor do desconto: ${dinheiro(valorDesconto)}\n` +
+                `Valor final: ${dinheiro(valorFinal)}`
+            );
+
+            break;
+        }
+
+        case 7: {
+
+            let nota = numero("q7a");
+            let frequencia = numero("q7b");
+
+            if (
+                nota < 0 ||
+                nota > 10 ||
+                frequencia < 0 ||
+                frequencia > 100
+            ) {
+                resultado(7, "Dados inválidos.");
+                return;
+            }
+
+            let situacao;
+
+            if (frequencia < 75) {
+
+                situacao = "Reprovado por frequência";
+
+            } else if (nota >= 7) {
+
+                situacao = "Aprovado";
+
+            } else if (nota >= 5) {
+
+                situacao = "Recuperação";
+
+            } else {
+
+                situacao = "Reprovado por nota";
+            }
+
+            resultado(7, situacao);
+
+            break;
+        }
+
+        case 8: {
+
+            let consumo = numero("q8a");
+            let dispositivos = numero("q8b");
+
+            if (
+                consumo < 0 ||
+                dispositivos <= 0
+            ) {
+                resultado(8, "Dados inválidos.");
+                return;
+            }
+
+            let plano;
+            let motivo;
+
+            if (
+                consumo <= 50 &&
+                dispositivos <= 3
+            ) {
+
+                plano = "Plano Básico";
+                motivo = "baixo consumo e poucos dispositivos";
+
+            } else if (
+                consumo <= 150 &&
+                dispositivos <= 6
+            ) {
+
+                plano = "Plano Intermediário";
+                motivo = "consumo moderado e quantidade moderada de dispositivos";
+
+            } else {
+
+                plano = "Plano Avançado";
+                motivo = "consumo e/ou quantidade de dispositivos elevados";
+            }
+
+            resultado(
+                8,
+                `Plano recomendado: ${plano}\nMotivo: ${motivo}.`
+            );
+
+            break;
+        }
+
+        case 9: {
+
+            let estoque = numero("q9a");
+            let minimo = numero("q9b");
+
+            if (
+                estoque < 0 ||
+                minimo <= 0
+            ) {
+                resultado(9, "Dados inválidos.");
+                return;
+            }
+
+            if (estoque < minimo)
+                resultado(9, "Crítico - realizar reposição.");
+
+            else if (estoque > minimo * 3)
+                resultado(9, "Excesso - pode indicar capital parado.");
+
+            else
+                resultado(9, "Adequado - estoque dentro da faixa.");
+
+            break;
+        }
+
+        case 10: {
+
+            let celsius = numero("q10a");
+
+            if (
+                celsius < -50 ||
+                celsius > 100
+            ) {
+                resultado(
+                    10,
+                    "Temperatura fora do intervalo experimental."
+                );
+                return;
+            }
+
+            let fahrenheit =
+                (celsius * 9 / 5) + 32;
+
+            let classificacao;
+
+            if (celsius < 0)
+                classificacao = "Baixa";
+            else if (celsius <= 15)
+                classificacao = "Fria";
+            else if (celsius <= 30)
+                classificacao = "Moderada";
+            else
+                classificacao = "Alta";
+
+            resultado(
+                10,
+                `Celsius: ${celsius} °C\n` +
+                `Fahrenheit: ${fahrenheit.toFixed(2)} °F\n` +
+                `Classificação: ${classificacao}`
+            );
+
+            break;
+        }
+
+        case 11: {
+
+            let renda = numero("q11a");
+            let comprometimento = numero("q11b");
+            let historico = valor("q11c");
+
+            if (
+                renda < 0 ||
+                comprometimento < 0 ||
+                !historico
+            ) {
+                resultado(11, "Dados inválidos.");
+                return;
+            }
+
+            let criterios = 0;
+
+            if (renda >= 3000)
+                criterios++;
+
+            if (comprometimento <= 30)
+                criterios++;
+
+            if (historico === "bom")
+                criterios++;
+
+            let resultadoFinal;
+
+            if (criterios === 3)
+                resultadoFinal = "Aprovada";
+            else if (criterios === 2)
+                resultadoFinal = "Pendente de análise";
+            else
+                resultadoFinal = "Recusada";
+
+            resultado(
+                11,
+                `Solicitação: ${resultadoFinal}\n` +
+                `Renda: ${renda >= 3000 ? "adequada" : "abaixo da regra"}\n` +
+                `Comprometimento: ${comprometimento <= 30 ? "adequado" : "acima da regra"}\n` +
+                `Histórico: ${historico}`
+            );
+
+            break;
+        }
+
+        case 12: {
+
+            let velocidade = numero("q12a");
+            let limite = numero("q12b");
+
+            if (
+                velocidade < 0 ||
+                limite <= 0
+            ) {
+                resultado(12, "Dados inválidos.");
+                return;
+            }
+
+            let excesso =
+                ((velocidade - limite) / limite) * 100;
+
+            let classificacao;
+
+            if (velocidade <= limite)
+                classificacao = "Regular";
+            else if (excesso <= 10)
+                classificacao = "Excesso leve";
+            else if (excesso <= 20)
+                classificacao = "Excesso moderado";
+            else
+                classificacao = "Excesso grave";
+
+            resultado(
+                12,
+                `Excesso: ${excesso.toFixed(2)}%\nClassificação: ${classificacao}`
+            );
+
+            break;
+        }
+
+        case 13: {
+
+            let cpu = numero("q13a");
+            let memoria = numero("q13b");
+
+            if (
+                cpu < 0 ||
+                cpu > 100 ||
+                memoria < 0 ||
+                memoria > 100
+            ) {
+                resultado(13, "Valores devem estar entre 0 e 100.");
+                return;
+            }
+
+            let estado;
+
+            if (
+                cpu >= 95 ||
+                memoria >= 95 ||
+                (cpu >= 90 && memoria >= 90)
+            ) {
+
+                estado = "Crítico";
+
+            } else if (
+                cpu >= 80 ||
+                memoria >= 80 ||
+                (cpu >= 70 && memoria >= 70)
+            ) {
+
+                estado = "Atenção";
+
+            } else {
+
+                estado = "Normal";
+            }
+
+            resultado(
+                13,
+                `Estado do servidor: ${estado}\nCPU: ${cpu}%\nMemória: ${memoria}%`
+            );
+
+            break;
+        }
+
+        case 14: {
+
+            let a = numero("q14a");
+            let b = numero("q14b");
+            let c = numero("q14c");
+
+            if (
+                a <= 0 ||
+                b <= 0 ||
+                c <= 0
+            ) {
+                resultado(
+                    14,
+                    "As medidas devem ser maiores que zero."
+                );
+                return;
+            }
+
+            if (
+                a + b <= c ||
+                a + c <= b ||
+                b + c <= a
+            ) {
+                resultado(
+                    14,
+                    "As medidas não formam um triângulo."
+                );
+                return;
+            }
+
+            let tipo;
+
+            if (a === b && b === c)
+                tipo = "Equilátero";
+            else if (
+                a === b ||
+                a === c ||
+                b === c
+            )
+                tipo = "Isósceles";
+            else
+                tipo = "Escaleno";
+
+            resultado(
+                14,
+                `Triângulo válido.\nTipo: ${tipo}`
+            );
+
+            break;
+        }
+
+        case 15: {
+
+            let renda = numero("q15a");
+
+            if (renda < 0) {
+                resultado(15, "Renda inválida.");
+                return;
+            }
+
+            let restante = renda;
+            let imposto = 0;
+
+            if (restante > 7000) {
+                imposto += (restante - 7000) * 0.22;
+                restante = 7000;
+            }
+
+            if (restante > 4000) {
+                imposto += (restante - 4000) * 0.15;
+                restante = 4000;
+            }
+
+            if (restante > 2000) {
+                imposto += (restante - 2000) * 0.07;
+            }
+
+            let faixa;
+
+            if (renda <= 2000)
+                faixa = "Faixa 1";
+            else if (renda <= 4000)
+                faixa = "Faixa 2";
+            else if (renda <= 7000)
+                faixa = "Faixa 3";
+            else
+                faixa = "Faixa 4";
+
+            resultado(
+                15,
+                `Renda: ${dinheiro(renda)}\n` +
+                `Faixa: ${faixa}\n` +
+                `Imposto: ${dinheiro(imposto)}`
+            );
+
+            break;
+        }
+
+        case 16: {
+
+            let indice = numero("q16a");
+
+            if (
+                indice < 0 ||
+                indice > 100
+            ) {
+                resultado(16, "O índice deve estar entre 0 e 100.");
+                return;
+            }
+
+            let classificacao;
+
+            if (indice <= 20)
+                classificacao = "Crítico";
+            else if (indice <= 40)
+                classificacao = "Baixo";
+            else if (indice <= 60)
+                classificacao = "Regular";
+            else if (indice <= 80)
+                classificacao = "Bom";
+            else
+                classificacao = "Excelente";
+
+            let limite =
+                [0,20,40,60,80,100].includes(indice);
+
+            resultado(
+                16,
+                `Índice: ${indice}\n` +
+                `Classificação: ${classificacao}\n` +
+                `${limite ? "Valor exatamente no limite de uma faixa." : ""}`
+            );
+
+            break;
+        }
+
+        case 17: {
+
+            let compra = numero("q17a");
+            let regiao = valor("q17b");
+            let beneficio = valor("q17c");
+            let freteBase = numero("q17d");
+
+            if (
+                compra < 0 ||
+                freteBase < 0
+            ) {
+                resultado(17, "Dados inválidos.");
+                return;
+            }
+
+            let frete = freteBase;
+            let regra = "Frete integral";
+
+            if (
+                regiao === "Sul" &&
+                (compra >= 200 || beneficio === "sim")
+            ) {
+
+                frete = 0;
+                regra = "Frete grátis";
+
+            } else if (
+                regiao === "Sudeste" &&
+                beneficio === "sim" &&
+                compra >= 150
+            ) {
+
+                frete *= 0.5;
+                regra = "50% de desconto";
+
+            } else if (
+                regiao === "Nordeste" &&
+                beneficio === "sim" &&
+                compra >= 150
+            ) {
+
+                frete *= 0.7;
+                regra = "30% de desconto";
+            }
+
+            resultado(
+                17,
+                `Regra: ${regra}\n` +
+                `Frete: ${dinheiro(frete)}\n` +
+                `Total: ${dinheiro(compra + frete)}`
+            );
+
+            break;
+        }
+
+        case 18: {
+
+            let a = listaNumeros("q18a");
+
+            if (
+                a.length !== 7 ||
+                a.some(v => v < 0)
+            ) {
+                resultado(18, "Informe exatamente 7 valores válidos.");
+                return;
+            }
+
+            let total = 0;
+            let acima = 0;
+            let maior = a[0];
+            let menor = a[0];
+
+            for (
+                let i = 0;
+                i < a.length;
+                i++
+            ) {
+
+                total += a[i];
+
+                if (a[i] > 20)
+                    acima++;
+
+                if (a[i] > maior)
+                    maior = a[i];
+
+                if (a[i] < menor)
+                    menor = a[i];
+            }
+
+            resultado(
+                18,
+                `Total: ${total}\n` +
+                `Média: ${(total / 7).toFixed(2)}\n` +
+                `Dias acima da meta: ${acima}\n` +
+                `Maior: ${maior}\n` +
+                `Menor: ${menor}`
+            );
+
+            break;
+        }
+
+        case 19: {
+
+            let n = numero("q19a");
+            let limite = numero("q19b");
+
+            if (
+                !Number.isInteger(n) ||
+                !Number.isInteger(limite) ||
+                limite <= 0
+            ) {
+                resultado(19, "Informe valores inteiros válidos.");
+                return;
+            }
+
+            let texto = "";
+
+            for (
+                let i = 1;
+                i <= limite;
+                i++
+            ) {
+
+                texto +=
+                    `${n} x ${i} = ${n * i}\n`;
+            }
+
+            resultado(19, texto);
+
+            break;
+        }
+
+        case 20: {
+
+            let inicio = numero("q20a");
+
+            if (
+                !Number.isInteger(inicio) ||
+                inicio <= 0
+            ) {
+                resultado(20, "Digite um inteiro positivo.");
+                return;
+            }
+
+            let texto = "";
+
+            for (
+                let i = inicio;
+                i >= 0;
+                i--
+            ) {
+
+                texto += i + "\n";
+            }
+
+            texto += "Lançamento iniciado!";
+
+            resultado(20, texto);
+
+            break;
+        }
+
+        case 21: {
+
+            let dados = listaTexto("q21a");
+
+            let soma = 0;
+            let quantidade = 0;
+
+            let i = 0;
+
+            while (i < dados.length) {
+
+                let valorAtual =
+                    Number(dados[i]);
+
+                if (valorAtual === -1)
+                    break;
+
+                if (
+                    Number.isFinite(valorAtual) &&
+                    valorAtual >= 0
+                ) {
+
+                    soma += valorAtual;
+                    quantidade++;
+                }
+
+                i++;
+            }
+
+            resultado(
+                21,
+                `Quantidade de vendas: ${quantidade}\n` +
+                `Total: ${soma.toFixed(2)}\n` +
+                `Média: ${quantidade ? (soma / quantidade).toFixed(2) : "0.00"}`
+            );
+
+            break;
+        }
+
+        case 22: {
+
+            let tentativas =
+                listaTexto("q22a");
+
+            let senha = "1234";
+            let maximo = 3;
+            let usadas = 0;
+            let acertou = false;
+
+            while (
+                usadas < maximo &&
+                usadas < tentativas.length
+            ) {
+
+                if (
+                    tentativas[usadas].trim() === senha
+                ) {
+
+                    acertou = true;
+                    usadas++;
+                    break;
+                }
+
+                usadas++;
+            }
+
+            resultado(
+                22,
+                acertou
+                    ? `Acesso autorizado.\nTentativas: ${usadas}`
+                    : `Acesso bloqueado.\nTentativas: ${usadas}`
+            );
+
+            break;
+        }
+
+        case 23: {
+
+            let inicio = numero("q23a");
+            let fim = numero("q23b");
+
+            if (
+                !Number.isInteger(inicio) ||
+                !Number.isInteger(fim)
+            ) {
+                resultado(23, "Informe inteiros.");
+                return;
+            }
+
+            if (inicio > fim) {
+
+                let aux = inicio;
+                inicio = fim;
+                fim = aux;
+            }
+
+            let pares = 0;
+            let impares = 0;
+            let somaPares = 0;
+            let somaImpares = 0;
+
+            for (
+                let i = inicio;
+                i <= fim;
+                i++
+            ) {
+
+                if (i % 2 === 0) {
+
+                    pares++;
+                    somaPares += i;
+
+                } else {
+
+                    impares++;
+                    somaImpares += i;
+                }
+            }
+
+            resultado(
+                23,
+                `Pares: ${pares}\n` +
+                `Soma dos pares: ${somaPares}\n` +
+                `Ímpares: ${impares}\n` +
+                `Soma dos ímpares: ${somaImpares}`
+            );
+
+            break;
+        }
+
+        case 24: {
+
+            let n = numero("q24a");
+
+            if (
+                !Number.isInteger(n) ||
+                n < 0
+            ) {
+                resultado(24, "Informe inteiro não negativo.");
+                return;
+            }
+
+            let fatorial = 1;
+
+            for (
+                let i = 2;
+                i <= n;
+                i++
+            ) {
+
+                fatorial *= i;
+            }
+
+            resultado(
+                24,
+                `${n}! = ${fatorial}`
+            );
+
+            break;
+        }
+
+        case 25: {
+
+            let notas =
+                listaNumeros("q25a");
+
+            if (
+                notas.length === 0 ||
+                notas.some(n => n < 0 || n > 10)
+            ) {
+                resultado(25, "Notas inválidas.");
+                return;
+            }
+
+            let soma = 0;
+            let aprovados = 0;
+            let recuperacao = 0;
+            let reprovados = 0;
+            let maior = notas[0];
+            let menor = notas[0];
+
+            for (
+                let i = 0;
+                i < notas.length;
+                i++
+            ) {
+
+                let n = notas[i];
+
+                soma += n;
+
+                if (n >= 7)
+                    aprovados++;
+                else if (n >= 5)
+                    recuperacao++;
+                else
+                    reprovados++;
+
+                if (n > maior)
+                    maior = n;
+
+                if (n < menor)
+                    menor = n;
+            }
+
+            resultado(
+                25,
+                `Média: ${(soma / notas.length).toFixed(2)}\n` +
+                `Aprovados: ${aprovados}\n` +
+                `Recuperação: ${recuperacao}\n` +
+                `Reprovados: ${reprovados}\n` +
+                `Maior nota: ${maior}\n` +
+                `Menor nota: ${menor}`
+            );
+
+            break;
+        }
+
+        case 26: {
+
+            let saldo = numero("q26a");
+            let taxa = numero("q26b") / 100;
+            let alvo = numero("q26c");
+
+            if (
+                saldo <= 0 ||
+                taxa <= 0 ||
+                alvo < saldo
+            ) {
+                resultado(26, "Dados inválidos.");
+                return;
+            }
+
+            let periodo = 0;
+            let historico = "";
+
+            while (
+                saldo < alvo &&
+                periodo < 10000
+            ) {
+
+                periodo++;
+                saldo *= 1 + taxa;
+
+                if (periodo <= 20) {
+
+                    historico +=
+                        `Período ${periodo}: ${saldo.toFixed(2)}\n`;
+                }
+            }
+
+            resultado(
+                26,
+                historico +
+                `Períodos necessários: ${periodo}\n` +
+                `Saldo final: ${saldo.toFixed(2)}`
+            );
+
+            break;
+        }
+
+        case 27: {
+
+            let quantidade = numero("q27a");
+
+            if (
+                !Number.isInteger(quantidade) ||
+                quantidade <= 0
+            ) {
+                resultado(27, "Quantidade inválida.");
+                return;
+            }
+
+            let a = 0;
+            let b = 1;
+            let texto = "";
+
+            for (
+                let i = 0;
+                i < quantidade;
+                i++
+            ) {
+
+                texto +=
+                    `Posição ${i}: ${a}\n`;
+
+                let temp = a + b;
+                a = b;
+                b = temp;
+            }
+
+            resultado(27, texto);
+
+            break;
+        }
+
+        case 28: {
+
+            let n = numero("q28a");
+
+            if (
+                !Number.isInteger(n) ||
+                n < 2
+            ) {
+
+                resultado(
+                    28,
+                    "Números menores que 2 não são primos."
+                );
+
+                return;
+            }
+
+            let primo = true;
+
+            for (
+                let i = 2;
+                i < n;
+                i++
+            ) {
+
+                if (n % i === 0) {
+
+                    primo = false;
+                    break;
+                }
+            }
+
+            resultado(
+                28,
+                primo
+                    ? `${n} é primo.`
+                    : `${n} não é primo.`
+            );
+
+            break;
+        }
+
+        case 29: {
+
+            let notas =
+                listaNumeros("q29a");
+
+            let frequencia =
+                [0,0,0,0,0,0];
+
+            let total = 0;
+            let soma = 0;
+
+            for (
+                let i = 0;
+                i < notas.length;
+                i++
+            ) {
+
+                let n = notas[i];
+
+                if (n === 0)
+                    break;
+
+                if (
+                    n < 1 ||
+                    n > 5 ||
+                    !Number.isInteger(n)
+                ) {
+
+                    continue;
+                }
+
+                frequencia[n]++;
+                total++;
+                soma += n;
+            }
+
+            let texto =
+                `Total válido: ${total}\n`;
+
+            for (
+                let i = 1;
+                i <= 5;
+                i++
+            ) {
+
+                texto +=
+                    `Nota ${i}: ${frequencia[i]}\n`;
+            }
+
+            texto +=
+                `Média: ${total ? (soma / total).toFixed(2) : "0.00"}`;
+
+            resultado(29, texto);
+
+            break;
+        }
+
+        case 30: {
+
+            let operacoes =
+                listaTexto("q30a");
+
+            let saldo = 0;
+            let entradas = 0;
+            let saidas = 0;
+
+            for (
+                let i = 0;
+                i < operacoes.length;
+                i++
+            ) {
+
+                let operacao =
+                    operacoes[i].trim();
+
+                if (
+                    operacao.toUpperCase() === "F"
+                )
+                    break;
+
+                let partes =
+                    operacao.split(":");
+
+                if (partes.length !== 2)
+                    continue;
+
+                let tipo =
+                    partes[0].toUpperCase();
+
+                let valorOperacao =
+                    Number(partes[1]);
+
+                if (
+                    !Number.isFinite(valorOperacao) ||
+                    valorOperacao < 0
+                )
+                    continue;
+
+                if (tipo === "E") {
+
+                    saldo += valorOperacao;
+                    entradas++;
+
+                } else if (tipo === "S") {
+
+                    saldo -= valorOperacao;
+                    saidas++;
+                }
+            }
+
+            resultado(
+                30,
+                `Saldo final: ${dinheiro(saldo)}\n` +
+                `Entradas: ${entradas}\n` +
+                `Saídas: ${saidas}\n` +
+                `${saldo < 0 ? "Saldo final negativo." : "Saldo final positivo ou zerado."}`
+            );
+
+            break;
+        }
+
+        case 31: {
+
+            let palpites =
+                listaNumeros("q31a");
+
+            let secreto = 37;
+            let maximo = 5;
+            let tentativa = 0;
+            let acertou = false;
+            let texto = "";
+
+            while (
+                tentativa < maximo &&
+                tentativa < palpites.length
+            ) {
+
+                let palpite =
+                    palpites[tentativa];
+
+                tentativa++;
+
+                if (palpite === secreto) {
+
+                    texto +=
+                        "Acertou!\n";
+
+                    acertou = true;
+                    break;
+
+                } else if (palpite > secreto) {
+
+                    texto +=
+                        `Tentativa ${tentativa}: palpite maior.\n`;
+
+                } else {
+
+                    texto +=
+                        `Tentativa ${tentativa}: palpite menor.\n`;
+                }
+            }
+
+            if (!acertou)
+                texto +=
+                    "Não acertou dentro do limite.";
+
+            texto +=
+                `\nTentativas utilizadas: ${tentativa}`;
+
+            resultado(31, texto);
+
+            break;
+        }
+
+        case 32: {
+
+            let inicio = numero("q32a");
+            let fim = numero("q32b");
+            let divisorA = numero("q32c");
+            let divisorB = numero("q32d");
+
+            if (
+                divisorA === 0 ||
+                divisorB === 0
+            ) {
+
+                resultado(
+                    32,
+                    "Divisores não podem ser zero."
+                );
+
+                return;
+            }
+
+            if (inicio > fim) {
+
+                let temp = inicio;
+                inicio = fim;
+                fim = temp;
+            }
+
+            let encontrados = [];
+
+            for (
+                let i = inicio;
+                i <= fim;
+                i++
+            ) {
+
+                if (
+                    i % divisorA === 0 &&
+                    i % divisorB === 0
+                ) {
+
+                    encontrados.push(i);
+                }
+            }
+
+            resultado(
+                32,
+                `Encontrados: ${encontrados.length ? encontrados.join(", ") : "nenhum"}\n` +
+                `Quantidade: ${encontrados.length}`
+            );
+
+            break;
+        }
+
+        case 33: {
+
+            let tamanho = numero("q33a");
+            let caractere = valor("q33b");
+
+            if (
+                !Number.isInteger(tamanho) ||
+                tamanho <= 0
+            ) {
+
+                resultado(
+                    33,
+                    "Tamanho inválido."
+                );
+
+                return;
+            }
+
+            if (!caractere)
+                caractere = "*";
+
+            caractere =
+                caractere.charAt(0);
+
+            let texto = "";
+
+            for (
+                let linha = 1;
+                linha <= tamanho;
+                linha++
+            ) {
+
+                for (
+                    let coluna = 1;
+                    coluna <= linha;
+                    coluna++
+                ) {
+
+                    texto += caractere;
+                }
+
+                texto += "\n";
+            }
+
+            resultado(33, texto);
+
+            break;
+        }
+
+        case 34: {
+
+            let leituras =
+                listaNumeros("q34a");
+
+            if (leituras.length !== 20) {
+
+                resultado(
+                    34,
+                    "Informe exatamente 20 leituras."
+                );
+
+                return;
+            }
+
+            let soma = 0;
+            let validas = 0;
+            let descartadas = 0;
+
+            for (
+                let i = 0;
+                i < leituras.length;
+                i++
+            ) {
+
+                if (
+                    leituras[i] < 10 ||
+                    leituras[i] > 90
+                ) {
+
+                    descartadas++;
+                    continue;
+                }
+
+                soma += leituras[i];
+                validas++;
+            }
+
+            resultado(
+                34,
+                `Leituras válidas: ${validas}\n` +
+                `Descartadas: ${descartadas}\n` +
+                `Média válida: ${validas ? (soma / validas).toFixed(2) : "0.00"}`
+            );
+
+            break;
+        }
+
+        case 35: {
+
+            let notas =
+                listaNumeros("q35a");
+
+            if (notas.length < 3) {
+
+                resultado(
+                    35,
+                    "Informe pelo menos 3 notas."
+                );
+
+                return;
+            }
+
+            let soma = 0;
+            let maior = notas[0];
+            let menor = notas[0];
+
+            for (
+                let i = 0;
+                i < notas.length;
+                i++
+            ) {
+
+                soma += notas[i];
+
+                if (notas[i] > maior)
+                    maior = notas[i];
+
+                if (notas[i] < menor)
+                    menor = notas[i];
+            }
+
+            let media =
+                soma / notas.length;
+
+            let posicoes = [];
+
+            for (
+                let i = 0;
+                i < notas.length;
+                i++
+            ) {
+
+                if (
+                    notas[i] > media
+                )
+                    posicoes.push(i);
+            }
+
+            resultado(
+                35,
+                `Vetor: [${notas.join(", ")}]\n` +
+                `Média: ${media.toFixed(2)}\n` +
+                `Maior: ${maior}\n` +
+                `Menor: ${menor}\n` +
+                `Posições acima da média: ${posicoes.length ? posicoes.join(", ") : "nenhuma"}`
+            );
+
+            break;
+        }
+
+        case 36: {
+
+            let consumo =
+                listaNumeros("q36a");
+
+            let meses = [
+                "Janeiro",
+                "Fevereiro",
+                "Março",
+                "Abril",
+                "Maio",
+                "Junho",
+                "Julho",
+                "Agosto",
+                "Setembro",
+                "Outubro",
+                "Novembro",
+                "Dezembro"
+            ];
+
+            if (
+                consumo.length !== 12 ||
+                consumo.some(v => v < 0)
+            ) {
+
+                resultado(
+                    36,
+                    "Informe exatamente 12 valores válidos."
+                );
+
+                return;
+            }
+
+            let soma = 0;
+            let maior = consumo[0];
+            let menor = consumo[0];
+            let indiceMaior = 0;
+            let indiceMenor = 0;
+
+            for (
+                let i = 0;
+                i < consumo.length;
+                i++
+            ) {
+
+                soma += consumo[i];
+
+                if (consumo[i] > maior) {
+
+                    maior = consumo[i];
+                    indiceMaior = i;
+                }
+
+                if (consumo[i] < menor) {
+
+                    menor = consumo[i];
+                    indiceMenor = i;
+                }
+            }
+
+            let media =
+                soma / 12;
+
+            let acimaMedia = [];
+
+            for (
+                let i = 0;
+                i < consumo.length;
+                i++
+            ) {
+
+                if (
+                    consumo[i] > media
+                )
+                    acimaMedia.push(meses[i]);
+            }
+
+            resultado(
+                36,
+                `Consumo anual: ${soma.toFixed(2)}\n` +
+                `Média mensal: ${media.toFixed(2)}\n` +
+                `Maior: ${meses[indiceMaior]} (${maior})\n` +
+                `Menor: ${meses[indiceMenor]} (${menor})\n` +
+                `Acima da média: ${acimaMedia.length ? acimaMedia.join(", ") : "nenhum"}`
+            );
+
+            break;
+        }
+
+        case 37: {
+
+            let codigo =
+                numero("q37a");
+
+            let vetor = [
+                101,
+                205,
+                310,
+                450,
+                512,
+                620
+            ];
+
+            let posicao = -1;
+
+            for (
+                let i = 0;
+                i < vetor.length;
+                i++
+            ) {
+
+                if (
+                    vetor[i] === codigo
+                ) {
+
+                    posicao = i;
+                    break;
+                }
+            }
+
+            if (posicao >= 0) {
+
+                resultado(
+                    37,
+                    `Código encontrado na posição ${posicao}.`
+                );
+
+            } else {
+
+                resultado(
+                    37,
+                    "Código não cadastrado."
+                );
+            }
+
+            break;
+        }
+
+        case 38: {
+
+            let vetor =
+                listaNumeros("q38a");
+
+            let referencia =
+                numero("q38b");
+
+            let posicoes = [];
+
+            for (
+                let i = 0;
+                i < vetor.length;
+                i++
+            ) {
+
+                if (
+                    vetor[i] === referencia
+                ) {
+
+                    posicoes.push(i);
+                }
+            }
+
+            resultado(
+                38,
+                `Ocorrências: ${posicoes.length}\n` +
+                `Posições: ${posicoes.length ? posicoes.join(", ") : "nenhuma"}`
+            );
+
+            break;
+        }
+
+        case 39: {
+
+            let vetor =
+                listaNumeros("q39a");
+
+            let pares = [];
+            let impares = [];
+
+            for (
+                let i = 0;
+                i < vetor.length;
+                i++
+            ) {
+
+                if (
+                    vetor[i] % 2 === 0
+                )
+                    pares.push(vetor[i]);
+
+                else
+                    impares.push(vetor[i]);
+            }
+
+            resultado(
+                39,
+                `Original: [${vetor.join(", ")}]\n` +
+                `Pares: [${pares.join(", ")}]\n` +
+                `Ímpares: [${impares.join(", ")}]`
+            );
+
+            break;
+        }
+
+        case 40: {
+
+            let vetor =
+                listaTexto("q40a");
+
+            let novoVetor = [];
+
+            for (
+                let i = 0;
+                i < vetor.length;
+                i++
+            ) {
+
+                let existe = false;
+
+                for (
+                    let j = 0;
+                    j < novoVetor.length;
+                    j++
+                ) {
+
+                    if (
+                        novoVetor[j] === vetor[i]
+                    ) {
+
+                        existe = true;
+                        break;
+                    }
+                }
+
+                if (!existe)
+                    novoVetor.push(vetor[i]);
+            }
+
+            resultado(
+                40,
+                `Original: [${vetor.join(", ")}]\n` +
+                `Sem duplicados: [${novoVetor.join(", ")}]`
+            );
+
+            break;
+        }
+
+        case 41: {
+
+            let vetor =
+                listaTexto("q41a");
+
+            let invertido = [];
+
+            for (
+                let i = vetor.length - 1;
+                i >= 0;
+                i--
+            ) {
+
+                invertido.push(vetor[i]);
+            }
+
+            resultado(
+                41,
+                `Original: [${vetor.join(", ")}]\n` +
+                `Invertido: [${invertido.join(", ")}]`
+            );
+
+            break;
+        }
+
+        case 42: {
+
+            let vetor =
+                listaNumeros("q42a");
+
+            let original =
+                vetor.slice();
+
+            for (
+                let i = 0;
+                i < vetor.length - 1;
+                i++
+            ) {
+
+                for (
+                    let j = i + 1;
+                    j < vetor.length;
+                    j++
+                ) {
+
+                    if (
+                        vetor[j] < vetor[i]
+                    ) {
+
+                        let temp = vetor[i];
+                        vetor[i] = vetor[j];
+                        vetor[j] = temp;
+                    }
+                }
+            }
+
+            resultado(
+                42,
+                `Antes: [${original.join(", ")}]\n` +
+                `Depois: [${vetor.join(", ")}]`
+            );
+
+            break;
+        }
+
+        case 43: {
+
+            let vetor =
+                listaNumeros("q43a");
+
+            if (vetor.length < 3) {
+
+                resultado(
+                    43,
+                    "Informe pelo menos 3 pontuações."
+                );
+
+                return;
+            }
+
+            let copia =
+                vetor.slice();
+
+            for (
+                let i = 0;
+                i < copia.length - 1;
+                i++
+            ) {
+
+                for (
+                    let j = i + 1;
+                    j < copia.length;
+                    j++
+                ) {
+
+                    if (
+                        copia[j] > copia[i]
+                    ) {
+
+                        let temp = copia[i];
+                        copia[i] = copia[j];
+                        copia[j] = temp;
+                    }
+                }
+            }
+
+            resultado(
+                43,
+                `1º lugar: ${copia[0]}\n` +
+                `2º lugar: ${copia[1]}\n` +
+                `3º lugar: ${copia[2]}`
+            );
+
+            break;
+        }
+
+        case 44: {
+
+            let temperaturas =
+                listaNumeros("q44a");
+
+            if (
+                temperaturas.length !== 14
+            ) {
+
+                resultado(
+                    44,
+                    "Informe exatamente 14 temperaturas."
+                );
+
+                return;
+            }
+
+            let soma = 0;
+            let abaixo = 0;
+            let dentro = 0;
+            let acima = 0;
+
+            let sequencia = 0;
+            let maiorSequencia = 0;
+
+            for (
+                let i = 0;
+                i < temperaturas.length;
+                i++
+            ) {
+
+                let temp =
+                    temperaturas[i];
+
+                soma += temp;
+
+                if (temp < 20) {
+
+                    abaixo++;
+                    sequencia = 0;
+
+                } else if (temp <= 28) {
+
+                    dentro++;
+                    sequencia = 0;
+
+                } else {
+
+                    acima++;
+
+                    if (temp > 30) {
+
+                        sequencia++;
+
+                        if (
+                            sequencia > maiorSequencia
+                        ) {
+
+                            maiorSequencia =
+                                sequencia;
+                        }
+
+                    } else {
+
+                        sequencia = 0;
+                    }
+                }
+            }
+
+            resultado(
+                44,
+                `Média: ${(soma / 14).toFixed(2)} °C\n` +
+                `Abaixo da faixa: ${abaixo}\n` +
+                `Dentro da faixa: ${dentro}\n` +
+                `Acima da faixa: ${acima}\n` +
+                `Maior sequência acima de 30°C: ${maiorSequencia}`
+            );
+
+            break;
+        }
+
+        case 45: {
+
+            let produtos =
+                listaTexto("q45a");
+
+            let precos =
+                listaNumeros("q45b");
+
+            let busca =
+                valor("q45c").trim();
+
+            if (
+                produtos.length !== precos.length ||
+                produtos.length === 0
+            ) {
+
+                resultado(
+                    45,
+                    "Os dois arrays devem ter o mesmo tamanho."
+                );
+
+                return;
+            }
+
+            let total = 0;
+            let indiceMaisCaro = 0;
+            let indiceMaisBarato = 0;
+
+            for (
+                let i = 0;
+                i < precos.length;
+                i++
+            ) {
+
+                total += precos[i];
+
+                if (
+                    precos[i] >
+                    precos[indiceMaisCaro]
+                ) {
+
+                    indiceMaisCaro = i;
+                }
+
+                if (
+                    precos[i] <
+                    precos[indiceMaisBarato]
+                ) {
+
+                    indiceMaisBarato = i;
+                }
+            }
+
+            let encontrado = -1;
+
+            for (
+                let i = 0;
+                i < produtos.length;
+                i++
+            ) {
+
+                if (
+                    produtos[i].toLowerCase() ===
+                    busca.toLowerCase()
+                ) {
+
+                    encontrado = i;
+                    break;
+                }
+            }
+
+            resultado(
+                45,
+                `Total: ${dinheiro(total)}\n` +
+                `Mais caro: ${produtos[indiceMaisCaro]} - ${dinheiro(precos[indiceMaisCaro])}\n` +
+                `Mais barato: ${produtos[indiceMaisBarato]} - ${dinheiro(precos[indiceMaisBarato])}\n` +
+                `Busca: ${
+                    encontrado >= 0
+                        ? `${produtos[encontrado]} - ${dinheiro(precos[encontrado])}`
+                        : "produto não encontrado"
+                }`
+            );
+
+            break;
+        }
+
+        case 46: {
+
+            let operacoes =
+                listaTexto("q46a");
+
+            let fila = [];
+            let texto = "";
+
+            for (
+                let i = 0;
+                i < operacoes.length;
+                i++
+            ) {
+
+                let op =
+                    operacoes[i].trim();
+
+                if (
+                    op.toUpperCase() === "F"
+                )
+                    break;
+
+                if (
+                    op.toUpperCase() === "A"
+                ) {
+
+                    if (fila.length > 0) {
+
+                        texto +=
+                            `Atendido: ${fila.shift()}\n`;
+
+                    } else {
+
+                        texto +=
+                            "Fila vazia.\n";
+                    }
+
+                } else if (
+                    op.toUpperCase() === "V"
+                ) {
+
+                    texto +=
+                        `Fila: [${fila.join(", ")}]\n`;
+
+                } else if (
+                    op.toUpperCase().startsWith("E:")
+                ) {
+
+                    let nome =
+                        op.substring(2).trim();
+
+                    if (nome)
+                        fila.push(nome);
+                }
+            }
+
+            texto +=
+                `Fila final: [${fila.join(", ")}]`;
+
+            resultado(46, texto);
+
+            break;
+        }
+
+        case 47: {
+
+            let vetor =
+                listaNumeros("q47a");
+
+            let limite =
+                numero("q47b");
+
+            let selecionados = [];
+
+            for (
+                let i = 0;
+                i < vetor.length;
+                i++
+            ) {
+
+                if (
+                    vetor[i] > limite
+                ) {
+
+                    selecionados.push(vetor[i]);
+                }
+            }
+
+            let percentual =
+                vetor.length
+                    ? (selecionados.length / vetor.length) * 100
+                    : 0;
+
+            resultado(
+                47,
+                `Selecionados: [${selecionados.join(", ")}]\n` +
+                `Quantidade: ${selecionados.length}\n` +
+                `Percentual: ${percentual.toFixed(2)}%`
+            );
+
+            break;
+        }
+
+        case 48: {
+
+            let a =
+                listaNumeros("q48a");
+
+            let b =
+                listaNumeros("q48b");
+
+            if (
+                a.length !== b.length ||
+                a.length === 0
+            ) {
+
+                resultado(
+                    48,
+                    "Os vetores devem ter o mesmo tamanho."
+                );
+
+                return;
+            }
+
+            let maior = 0;
+            let menor = 0;
+            let igual = 0;
+
+            let somaA = 0;
+            let somaB = 0;
+
+            for (
+                let i = 0;
+                i < a.length;
+                i++
+            ) {
+
+                somaA += a[i];
+                somaB += b[i];
+
+                if (a[i] > b[i])
+                    maior++;
+
+                else if (a[i] < b[i])
+                    menor++;
+
+                else
+                    igual++;
+            }
+
+            let mediaA =
+                somaA / a.length;
+
+            let mediaB =
+                somaB / b.length;
+
+            let vencedor;
+
+            if (mediaA > mediaB)
+                vencedor = "Vetor A";
+
+            else if (mediaB > mediaA)
+                vencedor = "Vetor B";
+
+            else
+                vencedor = "Empate";
+
+            resultado(
+                48,
+                `A maior em ${maior} posição(ões)\n` +
+                `A menor em ${menor} posição(ões)\n` +
+                `Iguais em ${igual} posição(ões)\n` +
+                `Média A: ${mediaA.toFixed(2)}\n` +
+                `Média B: ${mediaB.toFixed(2)}\n` +
+                `Maior média: ${vencedor}`
+            );
+
+            break;
+        }
+
+        case 49: {
+
+            let valores =
+                listaNumeros("q49a");
+
+            if (
+                valores.length !== 15
+            ) {
+
+                resultado(
+                    49,
+                    "Informe exatamente 15 valores."
+                );
+
+                return;
+            }
+
+            let matriz = [
+                [],
+                [],
+                []
+            ];
+
+            let posicao = 0;
+
+            for (
+                let setor = 0;
+                setor < 3;
+                setor++
+            ) {
+
+                for (
+                    let dia = 0;
+                    dia < 5;
+                    dia++
+                ) {
+
+                    matriz[setor][dia] =
+                        valores[posicao];
+
+                    posicao++;
+                }
+            }
+
+            let totalSetores =
+                [0,0,0];
+
+            let totalDias =
+                [0,0,0,0,0];
+
+            let maior =
+                matriz[0][0];
+
+            let setorMaior = 0;
+            let diaMaior = 0;
+
+            for (
+                let setor = 0;
+                setor < 3;
+                setor++
+            ) {
+
+                for (
+                    let dia = 0;
+                    dia < 5;
+                    dia++
+                ) {
+
+                    let valorAtual =
+                        matriz[setor][dia];
+
+                    totalSetores[setor] +=
+                        valorAtual;
+
+                    totalDias[dia] +=
+                        valorAtual;
+
+                    if (
+                        valorAtual > maior
+                    ) {
+
+                        maior = valorAtual;
+                        setorMaior = setor;
+                        diaMaior = dia;
+                    }
+                }
+            }
+
+            resultado(
+                49,
+                `Setor 1: ${totalSetores[0]}\n` +
+                `Setor 2: ${totalSetores[1]}\n` +
+                `Setor 3: ${totalSetores[2]}\n` +
+                `Totais por dia: [${totalDias.join(", ")}]\n` +
+                `Maior consumo: ${maior}\n` +
+                `Localização: setor ${setorMaior + 1}, dia ${diaMaior + 1}`
+            );
+
+            break;
+        }
+
+        case 50: {
+
+            let consumos =
+                listaNumeros("q50a");
+
+            if (
+                consumos.length < 10 ||
+                consumos.some(v => v < 0)
+            ) {
+
+                resultado(
+                    50,
+                    "Informe pelo menos 10 consumos válidos."
+                );
+
+                return;
+            }
+
+            let soma = 0;
+            let maior = consumos[0];
+            let menor = consumos[0];
+
+            let criticos = 0;
+            let adequados = 0;
+            let altos = 0;
+            let excessivos = 0;
+
+            for (
+                let i = 0;
+                i < consumos.length;
+                i++
+            ) {
+
+                let consumo =
+                    consumos[i];
+
+                soma += consumo;
+
+                if (consumo > maior)
+                    maior = consumo;
+
+                if (consumo < menor)
+                    menor = consumo;
+
+                if (consumo < 100)
+                    criticos++;
+
+                else if (consumo <= 300)
+                    adequados++;
+
+                else if (consumo <= 500)
+                    altos++;
+
+                else
+                    excessivos++;
+            }
+
+            let media =
+                soma / consumos.length;
+
+            let acimaMedia = [];
+
+            for (
+                let i = 0;
+                i < consumos.length;
+                i++
+            ) {
+
+                if (
+                    consumos[i] > media
+                ) {
+
+                    acimaMedia.push(i + 1);
+                }
+            }
+
+            let painel = "";
+
+            for (
+                let i = 0;
+                i < consumos.length;
+                i++
+            ) {
+
+                let classificacao;
+
+                if (consumos[i] < 100)
+                    classificacao = "Crítico";
+
+                else if (consumos[i] <= 300)
+                    classificacao = "Adequado";
+
+                else if (consumos[i] <= 500)
+                    classificacao = "Alto";
+
+                else
+                    classificacao = "Excessivo";
+
+                painel +=
+                    `Unidade ${i + 1}: ${consumos[i]} kWh - ${classificacao}\n`;
+            }
+
+            resultado(
+                50,
+                `Média: ${media.toFixed(2)} kWh\n` +
+                `Maior: ${maior} kWh\n` +
+                `Menor: ${menor} kWh\n` +
+                `Críticos: ${criticos}\n` +
+                `Adequados: ${adequados}\n` +
+                `Altos: ${altos}\n` +
+                `Excessivos: ${excessivos}\n` +
+                `Unidades acima da média: ${acimaMedia.length ? acimaMedia.join(", ") : "nenhuma"}\n\n` +
+                `PAINEL\n${painel}`
+            );
+
+            break;
+        }
+
+        default:
+
+            resultado(
+                id,
+                "Questão não encontrada."
+            );
+    }
+}
+
+</script>
+
+</body>
+</html>
+```
